@@ -1,0 +1,15 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: open-pecha-migration-script-postgres
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: open-pecha-migration-script
+    ports:
+      - "5432:5432"
+    volumes:
+      - opms_pgdata:/var/lib/postgresql/data
+
+volumes:
+  opms_pgdata:

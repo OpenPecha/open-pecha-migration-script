@@ -10,3 +10,9 @@ class NewPechaBackendError(RuntimeError):
     Raised when the new pecha-backend persons API request fails.
     """
     pass
+
+class DatabaseError(RuntimeError):
+    """
+    Raised when a database operation fails.
+    """
+    pass
