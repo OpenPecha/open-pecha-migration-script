@@ -51,10 +51,11 @@ def migrate_person():
                 limit=limit,
                 person_created_count=person_created_count,
             )
+            print("Response", response)
             _save_migrated_person_to_database(
                 old_person_id=person["id"],
-                old_person_bdrc_id=person["bdrc_id"],
-                new_person_id=response["data"]["id"]
+                old_person_bdrc_id=person["bdrc"],
+                new_person_id=response["id"]
             )
             print(f"Saved migrated person to database: {person['id']}")
             time.sleep(5)
@@ -91,9 +92,12 @@ def _create_person_in_new_pecha_backend(
     Creates new person at new pecha backend api
     """
     try:
+        person_payload = person.copy()
+        if person_payload.get("id", None) is not None:
+            person_payload.pop("id")
         response = requests.post(
             f"{NEW_PECHA_API_URL}/v2/persons",
-            json=person,
+            json=person_payload,
             timeout=30
         )
         return response.json()
@@ -110,7 +114,9 @@ def _filter_migrated_persons(
     """
     Filters out migrated persons from old person ids
     """
-    migrated_person_ids = [person["id"] for person in migrated_persons]
+    migrated_person_ids = [
+        person["old_person_id"] for person in migrated_persons
+    ]
     return [
         person for person in data if person["id"] not in migrated_person_ids
     ]
@@ -156,4 +162,6 @@ def _save_migrated_person_to_database(
 
 
 if __name__ == "__main__":
+    print("Starting person migration")
     migrate_person()
+    print("Person migration ended")
