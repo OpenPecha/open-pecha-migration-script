@@ -51,7 +51,7 @@ def migrate_person():
                 limit=limit,
                 person_created_count=person_created_count,
             )
-            print("Response", response)
+            print("Response from new pecha backend api", response)
             _save_migrated_person_to_database(
                 old_person_id=person["id"],
                 old_person_bdrc_id=person["bdrc"],
