@@ -103,7 +103,11 @@ def _create_person_in_new_pecha_backend(
         return response.json()
     except requests.exceptions.RequestException as e:
         raise NewPechaBackendError(
-            f"Error: {e},\nPerson: {person},\nSkip: {skip},\nLimit: {limit},\nPerson Created Count: {person_created_count}"
+            f"Error: {e}, \
+            \nPerson: {person}, \
+            \nSkip: {skip}, \
+            \nLimit: {limit}, \
+            \nPerson Created Count: {person_created_count}"
         ) from e
 
 
